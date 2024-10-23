@@ -5,33 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UAMBANK - Sistema Bancário Premium</title>
     <style>
-        /* Estilos Premium */
+        /* Estilos de Desktop */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #0a1f44; /* Azul marinho escuro */
             color: #f5f5f5; /* Texto branco */
             margin: 0;
             padding: 0;
+            display: block;
+        }
+
+        /* Container principal para Desktop */
+        #container {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%;
             height: 100vh;
         }
 
-        #container {
+        /* Sidebar para navegação */
+        #sidebar {
+            width: 250px;
             background-color: #1c2b4c; /* Caixa azul mais clara */
-            padding: 30px;
-            border-radius: 12px;
+            padding: 20px;
             box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6); /* Sombra premium */
-            width: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        #sidebar h1 {
+            color: #f5b041;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-button {
+            background-color: #f5b041;
+            color: #0a1f44;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
             text-align: center;
         }
 
-        h1 {
-            color: #f5f5f5; /* Branco para títulos */
-            font-size: 32px;
+        .sidebar-button:hover {
+            background-color: #f7c55f;
+        }
+
+        /* Conteúdo principal */
+        #content {
+            flex-grow: 1;
+            padding: 40px;
+            background-color: #1c2b4c;
+        }
+
+        #content h2 {
+            color: #f5f5f5;
+            font-size: 28px;
             margin-bottom: 20px;
-            font-weight: bold;
         }
 
         input, button, select {
@@ -72,30 +104,7 @@
             width: 50%; /* Ajustar dinamicamente */
         }
 
-        .hidden {
-            display: none;
-        }
-
-        .notification {
-            margin-top: 20px;
-            color: #27ae60;
-            font-size: 14px;
-            display: none;
-        }
-
-        /* Responsividade */
-        @media (max-width: 600px) {
-            #container {
-                width: 90%;
-                padding: 20px;
-            }
-
-            input, button {
-                font-size: 14px;
-            }
-        }
-
-        /* Estilo da aba de extrato */
+        /* Estilo do extrato e outros detalhes */
         #extratoList {
             text-align: left;
             margin-top: 20px;
@@ -112,194 +121,149 @@
             margin: 5px 0;
         }
 
-        /* Estilos para as novas seções */
-        #pixSection, #transferSection, #profileSection, #chatSection, #helpSection {
-            text-align: left;
-            margin-top: 20px;
+        /* Estilo dos gráficos */
+        #chartSection {
+            margin-top: 30px;
         }
 
-        .operation-item {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #2c3e5e;
-            border-radius: 6px;
-        }
+        /* Responsividade: Ajustes para telas menores */
+        @media (max-width: 1200px) {
+            #sidebar {
+                width: 200px;
+            }
 
-        .operation-item label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+            #content {
+                padding: 20px;
+            }
 
-        .operation-item input {
-            width: calc(100% - 20px);
-            margin: 5px 0;
-        }
+            .sidebar-button {
+                padding: 10px;
+            }
 
-        /* Novo estilo para as abas adicionais */
-        .tab-button {
-            background-color: #f5b041;
-            color: #0a1f44;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 20px;
-            cursor: pointer;
-            text-align: center;
+            input, button, select {
+                padding: 10px;
+                font-size: 14px;
+            }
         }
-
-        .tab-button:hover {
-            background-color: #f7c55f;
-        }
-
     </style>
 </head>
 <body>
 
     <div id="container">
-        <h1>UAMBANK</h1>
-
-        <!-- Seção de boas-vindas -->
-        <div id="welcomeSection">
-            <button id="goToRegister">Cadastrar</button>
-            <button id="goToLogin">Entrar</button>
+        <!-- Sidebar de navegação -->
+        <div id="sidebar">
+            <h1>UAMBANK</h1>
+            <div class="sidebar-button" id="goToRegister">Cadastrar</div>
+            <div class="sidebar-button" id="goToLogin">Entrar</div>
+            <div class="sidebar-button" id="goToBank">Banco</div>
+            <div class="sidebar-button" id="goToProfile">Perfil</div>
+            <div class="sidebar-button" id="goToInvestments">Investimentos</div>
+            <div class="sidebar-button" id="goToTransfers">Transferências</div>
+            <div class="sidebar-button" id="goToPayments">Pagamentos</div>
+            <div class="sidebar-button" id="goToExtrato">Extrato</div>
+            <div class="sidebar-button" id="goToChat">Chat</div>
+            <div class="sidebar-button" id="goToHelp">Ajuda</div>
+            <div class="sidebar-button" id="logoutButton">Sair</div>
         </div>
 
-        <!-- Seção de cadastro -->
-        <div id="registerSection" class="hidden">
-            <h2>Cadastro</h2>
-            <input type="text" id="registerName" placeholder="Nome" required>
-            <input type="text" id="registerCpf" placeholder="CPF" required>
-            <input type="password" id="registerPassword" placeholder="Senha" required>
-            <button id="registerUser">Cadastrar</button>
-            <button id="backToWelcome">Voltar</button>
-        </div>
-
-        <!-- Seção de entrar (Login) -->
-        <div id="loginSection" class="hidden">
-            <h2>Entrar</h2>
-            <input type="text" id="loginCpf" placeholder="CPF" required>
-            <input type="password" id="loginPassword" placeholder="Senha" required>
-            <button id="loginUser">Entrar</button>
-            <button id="forgotPassword">Esqueci a Senha</button>
-            <button id="backToWelcomeFromLogin">Voltar</button>
-        </div>
-
-        <!-- Seção do banco -->
-        <div id="bankSection" class="hidden">
-            <h2>Bem-vindo(a), <span id="userName"></span>!</h2>
-            <p>Agência: <span id="userAgencia"></span></p>
-            <p>Conta: <span id="userConta"></span></p>
-            <p>Saldo: R$ <span id="userSaldo"></span></p>
-
-            <!-- Barra de progresso para saldo -->
-            <div id="balanceBar">
-                <div id="progress"></div>
+        <!-- Conteúdo principal -->
+        <div id="content">
+            <!-- Seção de cadastro -->
+            <div id="registerSection">
+                <h2>Cadastro</h2>
+                <input type="text" id="registerName" placeholder="Nome" required>
+                <input type="text" id="registerCpf" placeholder="CPF" required>
+                <input type="password" id="registerPassword" placeholder="Senha" required>
+                <button id="registerUser">Cadastrar</button>
             </div>
 
-            <!-- Operações bancárias -->
-            <button id="depositButton">Depositar</button>
-            <button id="pixButton">PIX</button>
-            <button id="transferButton">Transferência</button>
-            <button id="investmentButton">Investimentos</button>
-            <button id="payBillButton">Pagar Boleto</button>
-            <button id="viewExtratoButton">Ver Extrato</button>
-            <button id="profileButton">Perfil</button>
-            <button id="logoutButton">Sair</button>
-
-            <!-- Notificação de operação -->
-            <div class="notification" id="notification">Operação realizada com sucesso!</div>
-
-            <!-- Abas adicionais -->
-            <div class="tab-button" id="chatTab">Falar com Chat</div>
-            <div class="tab-button" id="helpTab">Ajuda</div>
-        </div>
-
-        <!-- Seção de extrato -->
-        <div id="extratoSection" class="hidden">
-            <h2>Extrato Detalhado</h2>
-            <div id="extratoList"></div>
-            <button id="backToBankFromExtrato">Voltar ao Banco</button>
-        </div>
-
-        <!-- Seção de PIX -->
-        <div id="pixSection" class="hidden">
-            <h2>PIX</h2>
-            <div class="operation-item">
-                <label for="pixCpf">CPF do destinatário:</label>
-                <input type="text" id="pixCpf" placeholder="Digite o CPF">
+            <!-- Seção de login -->
+            <div id="loginSection" class="hidden">
+                <h2>Entrar</h2>
+                <input type="text" id="loginCpf" placeholder="CPF" required>
+                <input type="password" id="loginPassword" placeholder="Senha" required>
+                <button id="loginUser">Entrar</button>
             </div>
-            <div class="operation-item">
-                <label for="pixValor">Valor:</label>
-                <input type="number" id="pixValor" placeholder="Digite o valor">
+
+            <!-- Seção do banco -->
+            <div id="bankSection" class="hidden">
+                <h2>Bem-vindo(a), <span id="userName"></span>!</h2>
+                <p>Agência: <span id="userAgencia"></span></p>
+                <p>Conta: <span id="userConta"></span></p>
+                <p>Saldo: R$ <span id="userSaldo"></span></p>
+                <div id="balanceBar">
+                    <div id="progress"></div>
+                </div>
+                <button id="depositButton">Depositar</button>
+                <button id="pixButton">PIX</button>
+                <button id="transferButton">Transferir</button>
+                <button id="investmentButton">Investir</button>
             </div>
-            <button id="sendPixButton">Enviar PIX</button>
-            <button id="backToBankFromPix">Voltar ao Banco</button>
-        </div>
 
-        <!-- Seção de Transferência -->
-        <div id="transferSection" class="hidden">
-            <h2>Transferência</h2>
-            <div class="operation-item">
-                <label for="transferCpf">CPF do destinatário:</label>
-                <input type="text" id="transferCpf" placeholder="Digite o CPF">
+            <!-- Seção de extrato -->
+            <div id="extratoSection" class="hidden">
+                <h2>Extrato Detalhado</h2>
+                <div id="extratoList"></div>
             </div>
-            <div class="operation-item">
-                <label for="transferValor">Valor:</label>
-                <input type="number" id="transferValor" placeholder="Digite o valor">
+
+            <!-- Seção de perfil -->
+            <div id="profileSection" class="hidden">
+                <h2>Meu Perfil</h2>
+                <p><strong>Nome:</strong> <span id="profileName"></span></p>
+                <p><strong>CPF:</strong> <span id="profileCpf"></span></p>
+                <p><strong>Agência:</strong> <span id="profileAgencia"></span></p>
+                <p><strong>Conta:</strong> <span id="profileConta"></span></p>
             </div>
-            <button id="sendTransferButton">Enviar Transferência</button>
-            <button id="backToBankFromTransfer">Voltar ao Banco</button>
-        </div>
 
-        <!-- Seção de Perfil -->
-        <div id="profileSection" class="hidden">
-            <h2>Meu Perfil</h2>
-            <p><strong>Nome:</strong> <span id="profileName"></span></p>
-            <p><strong>CPF:</strong> <span id="profileCpf"></span></p>
-            <p><strong>Agência:</strong> <span id="profileAgencia"></span></p>
-            <p><strong>Conta:</strong> <span id="profileConta"></span></p>
-            <button id="backToBankFromProfile">Voltar ao Banco</button>
-        </div>
+            <!-- Seção de investimentos -->
+            <div id="investmentSection" class="hidden">
+                <h2>Investimentos</h2>
+                <select id="investmentType">
+                    <option value="cdb">CDB - 10% ao ano</option>
+                    <option value="poupanca">Poupança - 6% ao ano</option>
+                    <option value="acoes">Ações - 12% ao ano</option>
+                </select>
+                <input type="number" id="investmentAmount" placeholder="Valor a investir">
+                <button id="investButton">Investir</button>
+            </div>
 
-        <!-- Seção de investimentos -->
-        <div id="investmentSection" class="hidden">
-            <h2>Investimentos</h2>
-            <p>Saldo atual: R$ <span id="totalInvestidoDisplay">0.00</span></p>
-            <p>Escolha um tipo de investimento:</p>
-            <select id="investmentType">
-                <option value="cdb">CDB - 10% ao ano - 2 anos</option>
-                <option value="poupanca">Poupança - 6% ao ano - 1 ano</option>
-                <option value="tesouro">Tesouro Direto - 8% ao ano - 3 anos</option>
-                <option value="acoes">Fundo de Ações - 12% ao ano - 5 anos</option>
-            </select>
-            <input type="number" id="investmentAmount" placeholder="Valor a investir">
-            <button id="investButton">Investir</button>
-            <button id="redeemInvestmentButton">Resgatar Investimento</button>
-            <p id="investmentSummary"></p>
-            <button id="backToBank">Voltar ao Banco</button>
-        </div>
+            <!-- Seção de transferências -->
+            <div id="transferSection" class="hidden">
+                <h2>Transferência</h2>
+                <input type="text" id="transferCpf
 
-        <!-- Seção Falar com Chat -->
-        <div id="chatSection" class="hidden">
-            <h2>Fale com nosso Chat</h2>
-            <p>Digite sua mensagem e responderemos em breve.</p>
-            <textarea id="chatMessage" rows="4" placeholder="Digite sua mensagem"></textarea>
-            <button id="sendMessage">Enviar Mensagem</button>
-            <button id="backToBankFromChat">Voltar ao Banco</button>
-        </div>
+                <input type="text" id="transferCpf" placeholder="CPF do destinatário" required>
+                <input type="number" id="transferValor" placeholder="Valor da transferência" required>
+                <button id="sendTransferButton">Enviar Transferência</button>
+            </div>
 
-        <!-- Seção de Ajuda -->
-        <div id="helpSection" class="hidden">
-            <h2>Central de Ajuda</h2>
-            <p>Como podemos te ajudar?</p>
-            <ul>
-                <li><strong>Dúvidas sobre PIX:</strong> Como fazer transações seguras.</li>
-                <li><strong>Dúvidas sobre Investimentos:</strong> Entenda os tipos de investimento.</li>
-                <li><strong>Outros:</strong> Contate nosso suporte técnico.</li>
-            </ul>
-            <button id="backToBankFromHelp">Voltar ao Banco</button>
-        </div>
+            <!-- Seção de pagamentos -->
+            <div id="paymentsSection" class="hidden">
+                <h2>Pagamentos</h2>
+                <input type="text" id="paymentCode" placeholder="Código de barras do boleto" required>
+                <input type="number" id="paymentAmount" placeholder="Valor do pagamento" required>
+                <button id="payBillButton">Pagar Boleto</button>
+            </div>
 
+            <!-- Seção de Chat -->
+            <div id="chatSection" class="hidden">
+                <h2>Fale Conosco</h2>
+                <textarea id="chatMessage" rows="4" placeholder="Digite sua mensagem"></textarea>
+                <button id="sendMessageButton">Enviar Mensagem</button>
+            </div>
+
+            <!-- Seção de Ajuda -->
+            <div id="helpSection" class="hidden">
+                <h2>Central de Ajuda</h2>
+                <p>Escolha uma das opções abaixo para saber mais:</p>
+                <ul>
+                    <li><strong>Como realizar transferências?</strong></li>
+                    <li><strong>Investimentos - Perguntas Frequentes</strong></li>
+                    <li><strong>Como pagar boletos?</strong></li>
+                    <li><strong>Suporte técnico</strong></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -322,7 +286,7 @@
 
         // Exibir uma seção específica
         function showSection(sectionId) {
-            const sections = ['welcomeSection', 'registerSection', 'loginSection', 'bankSection', 'extratoSection', 'pixSection', 'transferSection', 'investmentSection', 'profileSection', 'chatSection', 'helpSection'];
+            const sections = ['registerSection', 'loginSection', 'bankSection', 'extratoSection', 'profileSection', 'investmentSection', 'transferSection', 'paymentsSection', 'chatSection', 'helpSection'];
             sections.forEach(section => document.getElementById(section).classList.add('hidden'));
             document.getElementById(sectionId).classList.remove('hidden');
         }
@@ -350,22 +314,25 @@
         }
 
         // Exibir notificação temporária
-        function exibirNotificacao() {
-            const notificacao = document.getElementById('notification');
-            notificacao.style.display = 'block';
-            setTimeout(() => notificacao.style.display = 'none', 3000);
+        function exibirNotificacao(mensagem) {
+            const notificacao = document.createElement('div');
+            notificacao.classList.add('notification');
+            notificacao.textContent = mensagem;
+            document.body.appendChild(notificacao);
+            setTimeout(() => notificacao.remove(), 3000);
         }
 
-        // Eventos de navegação
+        // Eventos de navegação no menu lateral
         document.getElementById('goToRegister').addEventListener('click', () => showSection('registerSection'));
         document.getElementById('goToLogin').addEventListener('click', () => showSection('loginSection'));
-        document.getElementById('backToWelcome').addEventListener('click', () => showSection('welcomeSection'));
-        document.getElementById('backToWelcomeFromLogin').addEventListener('click', () => showSection('welcomeSection'));
-        document.getElementById('backToBankFromExtrato').addEventListener('click', () => showSection('bankSection'));
-        document.getElementById('backToBankFromPix').addEventListener('click', () => showSection('bankSection'));
-        document.getElementById('backToBankFromTransfer').addEventListener('click', () => showSection('bankSection'));
-        document.getElementById('backToBankFromChat').addEventListener('click', () => showSection('bankSection'));
-        document.getElementById('backToBankFromHelp').addEventListener('click', () => showSection('bankSection'));
+        document.getElementById('goToBank').addEventListener('click', () => showSection('bankSection'));
+        document.getElementById('goToProfile').addEventListener('click', () => showSection('profileSection'));
+        document.getElementById('goToInvestments').addEventListener('click', () => showSection('investmentSection'));
+        document.getElementById('goToTransfers').addEventListener('click', () => showSection('transferSection'));
+        document.getElementById('goToPayments').addEventListener('click', () => showSection('paymentsSection'));
+        document.getElementById('goToExtrato').addEventListener('click', () => showSection('extratoSection'));
+        document.getElementById('goToChat').addEventListener('click', () => showSection('chatSection'));
+        document.getElementById('goToHelp').addEventListener('click', () => showSection('helpSection'));
 
         // Evento de Cadastro
         document.getElementById('registerUser').addEventListener('click', () => {
@@ -376,19 +343,19 @@
             if (name && cpf && password) {
                 const agencia = gerarNumeroAleatorio(1000, 9999);
                 const conta = gerarNumeroAleatorio(10000, 99999);
-                const saldo = 1000;
+                const saldo = 1000; // Saldo inicial
 
                 const user = { name, cpf, password, agencia, conta, saldo, extrato: [] };
 
                 salvarUsuario(user);
                 alert('Cadastro realizado com sucesso!');
-                showSection('welcomeSection');
+                showSection('loginSection');
             } else {
                 alert('Preencha todos os campos.');
             }
         });
 
-        // Evento de Entrar (Login)
+        // Evento de Login
         document.getElementById('loginUser').addEventListener('click', () => {
             const cpf = document.getElementById('loginCpf').value;
             const password = document.getElementById('loginPassword').value;
@@ -414,40 +381,14 @@
                 user.extrato.push({ tipo: 'Depósito', valor, dataHora: obterDataHoraAtual() });
                 salvarUsuario(user);
                 atualizarTela(user);
-                exibirNotificacao();
+                exibirNotificacao('Depósito realizado com sucesso!');
             } else {
                 alert('Valor inválido.');
             }
         });
 
         // PIX
-        document.getElementById('pixButton').addEventListener('click', () => showSection('pixSection'));
-
-        document.getElementById('sendPixButton').addEventListener('click', () => {
-            const destinatarioCpf = document.getElementById('pixCpf').value;
-            const valor = parseFloat(document.getElementById('pixValor').value);
-            const userCpf = document.getElementById('loginCpf').value;
-
-            const user = obterUsuario(userCpf);
-            const destinatario = obterUsuario(destinatarioCpf);
-
-            if (destinatario && valor > 0 && valor <= user.saldo) {
-                user.saldo -= valor;
-                destinatario.saldo += valor;
-                user.extrato.push({ tipo: 'PIX enviado', valor, dataHora: obterDataHoraAtual() });
-                destinatario.extrato.push({ tipo: 'PIX recebido', valor, dataHora: obterDataHoraAtual() });
-
-                salvarUsuario(user);
-                salvarUsuario(destinatario);
-                atualizarTela(user);
-                exibirNotificacao();
-            } else {
-                alert('Erro no PIX. Verifique o CPF do destinatário ou o saldo.');
-            }
-        });
-
-        // Transferência
-        document.getElementById('transferButton').addEventListener('click', () => showSection('transferSection'));
+        document.getElementById('pixButton').addEventListener('click', () => showSection('transferSection'));
 
         document.getElementById('sendTransferButton').addEventListener('click', () => {
             const destinatarioCpf = document.getElementById('transferCpf').value;
@@ -466,14 +407,33 @@
                 salvarUsuario(user);
                 salvarUsuario(destinatario);
                 atualizarTela(user);
-                exibirNotificacao();
+                exibirNotificacao('Transferência realizada com sucesso!');
             } else {
                 alert('Erro na transferência. Verifique o CPF do destinatário ou o saldo.');
             }
         });
 
+        // Pagamento de boletos
+        document.getElementById('payBillButton').addEventListener('click', () => {
+            const codigo = document.getElementById('paymentCode').value;
+            const valor = parseFloat(document.getElementById('paymentAmount').value);
+            const cpf = document.getElementById('loginCpf').value;
+            const user = obterUsuario(cpf);
+
+            if (valor > 0 && codigo) {
+                user.saldo -= valor;
+                user.extrato.push({ tipo: 'Pagamento de Boleto', valor, dataHora: obterDataHoraAtual() });
+                salvarUsuario(user);
+                atualizarTela(user);
+                exibirNotificacao('Boleto pago com sucesso!');
+
+            } else {
+                alert('Erro no pagamento. Verifique o código do boleto e o saldo.');
+            }
+        });
+
         // Ver Extrato
-        document.getElementById('viewExtratoButton').addEventListener('click', () => {
+        document.getElementById('goToExtrato').addEventListener('click', () => {
             const cpf = document.getElementById('loginCpf').value;
             const user = obterUsuario(cpf);
 
@@ -514,7 +474,7 @@
                 user.extrato.push({ tipo: `Investimento em ${tipoInvestimento.toUpperCase()}`, valor, dataHora: obterDataHoraAtual() });
                 salvarUsuario(user);
                 atualizarTela(user);
-                exibirNotificacao();
+                exibirNotificacao('Investimento realizado com sucesso!');
 
                 document.getElementById('investmentSummary').innerText = `Você investiu R$ ${valor.toFixed(2)}. Saldo restante: R$ ${(user.saldo).toFixed(2)}. Total Investido: R$ ${totalInvestido.toFixed(2)}`;
             } else {
@@ -522,58 +482,12 @@
             }
         });
 
-        document.getElementById('redeemInvestmentButton').addEventListener('click', () => {
-            const cpf = document.getElementById('loginCpf').value;
-            const user = obterUsuario(cpf);
-            const valorInvestido = parseFloat(document.getElementById('investmentAmount').value);
-
-            if (valorInvestido > 0 && valorInvestido <= totalInvestido) {
-                user.saldo += valorInvestido;
-                totalInvestido -= valorInvestido; // Reduzindo o total investido
-                user.extrato.push({ tipo: 'Resgate de Investimento', valor: valorInvestido, dataHora: obterDataHoraAtual() });
-                salvarUsuario(user);
-                atualizarTela(user);
-                exibirNotificacao();
-
-                document.getElementById('investmentSummary').innerText = `Você resgatou R$ ${valorInvestido.toFixed(2)}. Saldo atual: R$ ${(user.saldo).toFixed(2)}. Total Investido: R$ ${totalInvestido.toFixed(2)}`;
-            } else {
-                alert('Não há valor suficiente investido para resgatar.');
-            }
-        });
-
-        document.getElementById('backToBank').addEventListener('click', () => {
-            showSection('bankSection');
-        });
-
-        // Perfil
-        document.getElementById('profileButton').addEventListener('click', () => {
-            const cpf = document.getElementById('loginCpf').value;
-            const user = obterUsuario(cpf);
-            document.getElementById('profileName').textContent = user.name;
-            document.getElementById('profileCpf').textContent = user.cpf;
-            document.getElementById('profileAgencia').textContent = user.agencia;
-            document.getElementById('profileConta').textContent = user.conta;
-            showSection('profileSection');
-        });
-
-        document.getElementById('backToBankFromProfile').addEventListener('click', () => {
-            showSection('bankSection');
-        });
-
-        // Chat e Ajuda
-        document.getElementById('chatTab').addEventListener('click', () => {
-            showSection('chatSection');
-        });
-
-        document.getElementById('helpTab').addEventListener('click', () => {
-            showSection('helpSection');
-        });
-
-        // Enviar Mensagem para o Chat
-        document.getElementById('sendMessage').addEventListener('click', () => {
+        // Chat
+        document.getElementById('sendMessageButton').addEventListener('click', () => {
             const message = document.getElementById('chatMessage').value;
             if (message.trim()) {
                 alert('Mensagem enviada com sucesso: ' + message);
+                document.getElementById('chatMessage').value = '';
             } else {
                 alert('Digite uma mensagem antes de enviar.');
             }
@@ -581,11 +495,10 @@
 
         // Logout
         document.getElementById('logoutButton').addEventListener('click', () => {
-            showSection('welcomeSection');
+            showSection('loginSection');
             document.getElementById('loginCpf').value = '';
             document.getElementById('loginPassword').value = '';
         });
     </script>
-
 </body>
 </html>
