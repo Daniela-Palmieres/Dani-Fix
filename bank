@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UAMBANK - Sistema Bancário Premium</title>
     <style>
-        /* Estilos de Desktop */
+       
         body {
             font-family: 'Arial', sans-serif;
             background-color: #0a1f44; /* Azul marinho escuro */
@@ -15,14 +15,14 @@
             display: block;
         }
 
-        /* Container principal para Desktop */
+        
         #container {
             display: flex;
             width: 100%;
             height: 100vh;
         }
 
-        /* Sidebar para navegação */
+        
         #sidebar {
             width: 250px;
             background-color: #1c2b4c; /* Caixa azul mais clara */
@@ -53,7 +53,7 @@
             background-color: #f7c55f;
         }
 
-        /* Conteúdo principal */
+        
         #content {
             flex-grow: 1;
             padding: 40px;
@@ -100,11 +100,11 @@
 
         #progress {
             height: 100%;
-            background-color: #f5b041; /* Dourado para a barra de progresso */
-            width: 50%; /* Ajustar dinamicamente */
+            background-color: #f5b041; 
+            width: 50%; 
         }
 
-        /* Estilo do extrato e outros detalhes */
+       
         #extratoList {
             text-align: left;
             margin-top: 20px;
@@ -121,12 +121,12 @@
             margin: 5px 0;
         }
 
-        /* Estilo dos gráficos */
+       
         #chartSection {
             margin-top: 30px;
         }
 
-        /* Responsividade: Ajustes para telas menores */
+       
         @media (max-width: 1200px) {
             #sidebar {
                 width: 200px;
